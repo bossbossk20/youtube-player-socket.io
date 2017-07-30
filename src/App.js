@@ -5,7 +5,6 @@ import { Row, Col, Input, Form, message } from 'antd'
 import socket from './config'
 
 const { Search } = Input
-const FormItem = Form.Item;
 class App extends Component {
   state = {
     list: '',
@@ -33,7 +32,7 @@ class App extends Component {
   handleClick = (value) => {
     // console.log(this.state.list)
     let { lists } = this.state
-    if (lists.filter(item => item.link== value).length === 0) {
+    if (lists.filter(item => item.link=== value).length === 0) {
       socket.emit('newVdo', {link: value})
       this.setState({
         lists: [ ...this.state.lists, {link: value} ],
@@ -58,7 +57,6 @@ class App extends Component {
   }
   render () {
     const { lists } = this.state
-    const { getFieldDecorator } = this.props.form
     const opts = {
       height: '390',
       width: '640',
