@@ -67,7 +67,7 @@ class App extends Component {
       }
     }
     return (
-      <div style={{marginTop: '50px'}}>
+      <div style={{marginTop: '30px', marginRight: '10px'}}>
         <Row>
           <Col xs={16} style={{textAlign: 'center'}}>
           {!this.state.lists[0] ?
