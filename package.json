@@ -6,7 +6,7 @@
     "react-scripts": "1.0.7"
   },
   "dependencies": {
-    "bulma": "^0.5.0",
+    "antd": "^2.12.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-youtube": "^7.4.0",
