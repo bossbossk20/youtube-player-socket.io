@@ -45,13 +45,13 @@ class App extends Component {
     socket.emit('newLists', { lists})
   }
   handleAdd = (id, title, img) => {
-    // console.log(id,title,img)
     let list = { id, title, img }
-    console.log(list)
     this.setState({
       showPlaylist: true,
       lists: [ ...this.state.lists, list ]
     })
+    socket.emit('newVdo', list )
+    message.success('Added To Playlist')
   }
   endVdo = () => {
     let lists = this.state.lists
