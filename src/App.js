@@ -30,7 +30,7 @@ class App extends Component {
     })
   }
   handleClick = (value) => {
-    Axios.get(`http://localhost:7001/search?keyword=${value}`).then((res) => {
+    Axios.get(`https://api.kody-koy.me/search?keyword=${value}`).then((res) => {
       console.log(res.data)
       this.setState({
         showPlaylist: false,
