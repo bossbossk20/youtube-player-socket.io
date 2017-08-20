@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Youtube from 'react-youtube'
 import { Row, Col, Input, Form, message, Button } from 'antd'
 import Axios from 'axios'
-import socket from './config'
+import { socket, URI } from './config'
 
 const { Search } = Input
 class App extends Component {
@@ -30,8 +30,7 @@ class App extends Component {
     })
   }
   handleClick = (value) => {
-    Axios.get(`https://api.kody-koy.me/search?keyword=${value}`).then((res) => {
-      console.log(res.data)
+    Axios.get(`${URI}/search?keyword=${value}`).then((res) => {
       this.setState({
         showPlaylist: false,
         searchs: res.data.items
@@ -71,12 +70,12 @@ class App extends Component {
     return (
       <div style={{marginTop: '30px', marginRight: '10px'}}>
         <Row>
-          <Col xs={16} style={{textAlign: 'center'}}>
+          <Col md={16} xs={24} style={{textAlign: 'center'}}>
           {!lists[0] ?
              <h1>Please Enter Link</h1> :
              <Youtube videoId={lists[0].id} opts={opts} onEnd={this.endVdo} />}
           </Col>
-          <Col xs={8}>
+          <Col md={8} xs={24} >
           <Search onSearch={value => this.handleClick(value)} />
           <div>
             {
