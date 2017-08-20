@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Youtube from 'react-youtube'
 import { Row, Col, Input, Form, message, Button } from 'antd'
 import Axios from 'axios'
-import socket from './config'
+import { socket, URI } from './config'
 
 const { Search } = Input
 class App extends Component {
@@ -30,8 +30,7 @@ class App extends Component {
     })
   }
   handleClick = (value) => {
-    Axios.get(`http://localhost:7001/search?keyword=${value}`).then((res) => {
-      console.log(res.data)
+    Axios.get(`${URI}/search?keyword=${value}`).then((res) => {
       this.setState({
         showPlaylist: false,
         searchs: res.data.items
