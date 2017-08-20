@@ -70,12 +70,12 @@ class App extends Component {
     return (
       <div style={{marginTop: '30px', marginRight: '10px'}}>
         <Row>
-          <Col xs={16} style={{textAlign: 'center'}}>
+          <Col md={16} xs={24} style={{textAlign: 'center'}}>
           {!lists[0] ?
              <h1>Please Enter Link</h1> :
              <Youtube videoId={lists[0].id} opts={opts} onEnd={this.endVdo} />}
           </Col>
-          <Col xs={8}>
+          <Col md={8} xs={24} >
           <Search onSearch={value => this.handleClick(value)} />
           <div>
             {
