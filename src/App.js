@@ -13,11 +13,6 @@ class App extends Component {
     searchs: []
   }
   componentDidMount = () => {
-    socket.on('resumeList', (lists) => {
-      this.setState({
-        lists
-      })
-    })
     socket.on('newVdo', (data) => {
       this.setState({
         lists: [ ...this.state.lists, data ]
