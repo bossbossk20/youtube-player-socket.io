@@ -9,6 +9,24 @@ This open-source code can be used for further integrations in Socket.io.
 
 A live demonstration of the code can be found [here](https://music.kody-koy.me/).
 
+## Usage
+All of the commands are done using *npm*:
+
+Running the program:
+```bash
+npm start
+```
+
+Installing dependencies:
+```bash
+npm install
+```
+
+Building:
+```bash
+npm build
+```
+
 ## How to Contribute
 A. Open an issue
 
