@@ -79,7 +79,7 @@ class App extends Component {
              <Youtube videoId={lists[0].id} opts={opts} onEnd={this.endVdo} />}
           </Col>
           <Col md={8} xs={24} >
-          <Search onSearch={value => this.handleClick(value)} />
+          <Search onSearch={value => this.handleClick(value)} autoFocus />
           <div>
             {
               showPlaylist ?
