@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Youtube from 'react-youtube'
 import { Row, Col, Input, Form, message, Button } from 'antd'
 import Axios from 'axios'
+import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { socket, URI } from './config'
 
 const { Search } = Input
@@ -58,9 +59,6 @@ class App extends Component {
     this.setState({ lists})
     socket.emit('newLists', { lists})
   }
-  forkMe () {
-    window.open("https://github.com/bossbossk20/youtube-player-socket.io");
-  }
   render () {
     const { lists, showPlaylist, searchs } = this.state
     const opts = {
@@ -109,7 +107,12 @@ class App extends Component {
           </div>
           </Col>
         </Row>
-        <img src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on Github" onClick={this.forkMe} style={{position: 'absolute', top: '0', left: '0', border: '0', cursor:'pointer'}}/>
+        <GitHubForkRibbon href="https://github.com/bossbossk20/youtube-player-socket.io"
+          target="_blank"
+          position="left"
+          color="green">
+            Fork me on GitHub
+        </GitHubForkRibbon>
       </div>
     )
   }
