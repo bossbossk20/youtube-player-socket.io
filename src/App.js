@@ -72,7 +72,7 @@ class App extends Component {
         <Row>
           <Col md={16} xs={24} style={{textAlign: 'center'}}>
           {!lists[0] ?
-             <h1>Please Enter Link</h1> :
+             <h1>Please enter a keyword to search for, or a Youtube link</h1> :
              <Youtube videoId={lists[0].id} opts={opts} onEnd={this.endVdo} />}
           </Col>
           <Col md={8} xs={24} >
