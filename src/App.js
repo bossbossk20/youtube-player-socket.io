@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Youtube from 'react-youtube'
-import { Row, Col, Input, Form, message, Button } from 'antd'
+import { Row, Col, Input, Form, message } from 'antd'
+import Player from './components/Player'
+import PlayList from './components/PlayList'
 import Axios from 'axios'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { socket, URI } from './config'
@@ -61,50 +62,24 @@ class App extends Component {
   }
   render () {
     const { lists, showPlaylist, searchs } = this.state
-    const opts = {
-      height: '390',
-      width: '640',
-      playerVars: {
-        autoplay: 1
-      }
-    }
     return (
       <div style={{marginTop: '30px', marginRight: '10px'}}>
         <Row>
           <Col md={16} xs={24} style={{textAlign: 'center'}}>
-          {!lists[0] ?
-             <h1>Please enter a keyword to search for, or a Youtube link</h1> :
-             <Youtube videoId={lists[0].id} opts={opts} onEnd={this.endVdo} />}
+            <Player
+              video={lists[0]}
+              endVdo={this.endVdo}
+            />
           </Col>
           <Col md={8} xs={24} >
-          <Search onSearch={value => this.handleClick(value)} autoFocus />
-          <div>
-            {
-              showPlaylist ?
-              lists.map((list, index) => (
-                <div key={index} style={{display: 'flex', marginTop: '10px'}} >
-                  <div>
-                    <img src={list.img} alt="" style={{width:'250px'}} />
-                  </div>
-                  <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
-                    <div>{list.title}</div>
-                     <Button type="primary" onClick={ () => this.handleRemove(index) } >REMOVE</Button>
-                  </div>
-                </div>
-              )):
-                searchs.map((search, index) => (
-                  <div key={index} style={{display: 'flex', marginTop: '10px'}} >
-                    <div>
-                      <img src={search.snippet.thumbnails.medium.url} alt="" style={{width:'250px'}} />
-                    </div>
-                    <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
-                      <div>{search.snippet.title}</div>
-                       <Button type="primary" onClick={ () => this.handleAdd(search.id.videoId, search.snippet.title, search.snippet.thumbnails.medium.url) } >ADD</Button>
-                    </div>
-                  </div>
-                ))
-            }
-          </div>
+            <Search onSearch={value => this.handleClick(value)} autoFocus />
+            <PlayList
+              lists={lists}
+              searchs={searchs}
+              showPlaylist={showPlaylist}
+              handleAdd={this.handleAdd}
+              handleRemove={this.handleRemove}
+            />
           </Col>
         </Row>
         <GitHubForkRibbon href="https://github.com/bossbossk20/youtube-player-socket.io"
