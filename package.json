@@ -13,7 +13,6 @@
   "dependencies": {
     "antd": "^2.12.2",
     "axios": "^0.16.2",
-    "eslint-config-standard": "^10.2.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-youtube": "^7.4.0",
