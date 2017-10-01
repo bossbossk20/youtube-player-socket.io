@@ -11,9 +11,12 @@ A live demonstration of the code can be found [here](https://music.kody-koy.me/)
 
 ## How to Contribute
 A. Open an issue
+
    ONLY REQUEST A FIX FOR AN ISSUE THAT DOESNT EXIST, 
    PLEASE LOOK AT THE CURRENT ISSUES FOUND FIRST: [HERE](https://github.com/bossbossk20/youtube-player-socket.io/issues)
+   
 B. Contribute to an existing issue
+
   1. Fork the code with issues
   2. Make a pull request.
   3. Your code will be further reviewed.
