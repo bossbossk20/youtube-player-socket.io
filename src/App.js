@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import Youtube from 'react-youtube'
-import { Row, Col, Input, Form, message, Button } from 'antd'
 import Axios from 'axios'
 import { socket, URI } from './config'
+import React, { Component } from 'react'
+import Player from './components/Player'
+import PlayerList from './components/PlayerList'
+import { Row, Col, Input, Form, message } from 'antd'
 
 const { Search } = Input
 class App extends Component {
@@ -58,51 +59,30 @@ class App extends Component {
     this.setState({ lists})
     socket.emit('newLists', { lists})
   }
+
   render () {
     const { lists, showPlaylist, searchs } = this.state
-    const opts = {
-      height: '390',
-      width: '640',
-      playerVars: {
-        autoplay: 1
-      }
-    }
+
     return (
       <div style={{marginTop: '30px', marginRight: '10px'}}>
         <Row>
           <Col md={16} xs={24} style={{textAlign: 'center'}}>
-          {!lists[0] ?
-             <h1>Please Enter Link</h1> :
-             <Youtube videoId={lists[0].id} opts={opts} onEnd={this.endVdo} />}
+            <Player
+                list={lists}
+                endVdo={this.endVdo}
+            />
           </Col>
+
           <Col md={8} xs={24} >
           <Search onSearch={value => this.handleClick(value)} />
           <div>
-            {
-              showPlaylist ?
-              lists.map((list, index) => (
-                <div key={index} style={{display: 'flex', marginTop: '10px'}} >
-                  <div>
-                    <img src={list.img} alt="" style={{width:'250px'}} />
-                  </div>
-                  <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
-                    <div>{list.title}</div>
-                     <Button type="primary" onClick={ () => this.handleRemove(index) } >REMOVE</Button>
-                  </div>
-                </div>
-              )):
-                searchs.map((search, index) => (
-                  <div key={index} style={{display: 'flex', marginTop: '10px'}} >
-                    <div>
-                      <img src={search.snippet.thumbnails.medium.url} alt="" style={{width:'250px'}} />
-                    </div>
-                    <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
-                      <div>{search.snippet.title}</div>
-                       <Button type="primary" onClick={ () => this.handleAdd(search.id.videoId, search.snippet.title, search.snippet.thumbnails.medium.url) } >ADD</Button>
-                    </div>
-                  </div>
-                ))
-            }
+            <PlayerList
+                lists={lists}
+                searches={searchs}
+                showPlaylist={showPlaylist}
+                handleAdd={this.handleAdd}
+                handleRemove={this.handleRemove}
+            />
           </div>
           </Col>
         </Row>
