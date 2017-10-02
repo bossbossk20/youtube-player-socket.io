@@ -5,6 +5,7 @@ import PlayList from './components/PlayList'
 import Axios from 'axios'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { socket, URI } from './config'
+import { Helmet } from "react-helmet";
 
 const { Search } = Input
 class App extends Component {
@@ -64,6 +65,9 @@ class App extends Component {
     const { lists, showPlaylist, searchs } = this.state
     return (
       <div style={{marginTop: '30px', marginRight: '10px'}}>
+        <Helmet>
+            <title>Socket.io Youtube Player</title>
+        </Helmet>
         <Row>
           <Col md={16} xs={24} style={{textAlign: 'center'}}>
             <Player
