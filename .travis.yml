@@ -8,8 +8,8 @@ branches:
   only:
   - master
 script:
-- yarn add
-- yarn run build # build project
+- yarn install
+- yarn build # build project
 install:
   yarn global add -g firebase-tools
 after_success:
