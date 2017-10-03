@@ -8,10 +8,10 @@ branches:
   only:
   - master
 script:
-- yarn install
+- yarn add
 - yarn run build # build project
 install:
-  yarn install -g firebase-tools
+  yarn global add firebase-tools
 after_success:
 - firebase use --token ${FIREBASE_TOKEN}
 - firebase use --add ${PROJECT_ID}
