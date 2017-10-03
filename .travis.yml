@@ -11,7 +11,7 @@ script:
 - yarn install
 - yarn run build # build project
 install:
-  yarn install -g firebase-tools
+  yarn global add -g firebase-tools
 after_success:
 - firebase use --token ${FIREBASE_TOKEN}
 - firebase use --add ${PROJECT_ID}
