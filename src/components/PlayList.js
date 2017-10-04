@@ -1,5 +1,24 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { Button } from 'antd';
+
+const PlayItem = styled.div`
+  display: flex;
+  marginTop: 10px;
+`;
+
+const ItemImage = styled.img`
+  width: 250px;
+`;
+
+const DescWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  text-align: center;
+  margin-left: 8px;
+`;
 
 export default class PlayList extends Component {
   render() {
@@ -9,26 +28,26 @@ export default class PlayList extends Component {
         {
           showPlaylist ?
           lists.map((list, index) => (
-            <div key={index} style={{display: 'flex', marginTop: '10px'}} >
+            <PlayItem key={index} >
               <div>
-                <img src={list.img} alt="" style={{width:'250px'}} />
+                <ItemImage src={list.img} alt="" />
               </div>
-              <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
+              <DescWrapper>
                 <div>{list.title}</div>
                 <Button type="primary" onClick={ () => handleRemove(index) } >REMOVE</Button>
-              </div>
-            </div>
+              </DescWrapper>
+            </PlayItem>
           )):
           searchs.map((search, index) => (
-            <div key={index} style={{display: 'flex', marginTop: '10px'}} >
+            <PlayItem key={index} >
               <div>
-                <img src={search.snippet.thumbnails.medium.url} alt="" style={{width:'250px'}} />
+                <ItemImage src={search.snippet.thumbnails.medium.url} alt={search.snippet.title + ' Image'} />
               </div>
-              <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
+              <DescWrapper>
                 <div>{search.snippet.title}</div>
                 <Button type="primary" onClick={ () => handleAdd(search.id.videoId, search.snippet.title, search.snippet.thumbnails.medium.url) } >ADD</Button>
-              </div>
-            </div>
+              </DescWrapper>
+            </PlayItem>
           ))
         }
       </div>
