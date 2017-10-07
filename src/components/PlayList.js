@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Button from 'antd/lib/button';
 
-const PlayItem = styled.div`
+export const PlayItem = styled.div`
   display: flex;
   marginTop: 10px;
 `;
