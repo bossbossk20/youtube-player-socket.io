@@ -40,4 +40,6 @@ B. Contribute to an existing issue
   3. Your code will be further reviewed.
   4. Your code if acceptable will be integrated!
 
+[![Gitter chat](https://badges.gitter.im/gitterHQ/services.png)](https://gitter.im/youtube-player-socket-io/Lobby?source=orgpage)
+
 ![](https://travis-ci.com/bossbossk20/youtube-player-socket.io.svg?token=MWPeeuitAEQryBz5xkuD&branch=master)
