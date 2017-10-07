@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PlayList, { PlayItem } from './PlayList';
+import PlayList from './PlayList';
 import { shallow } from 'enzyme';
 
-describe.only('Playlist', () => {
+describe('Playlist', () => {
   let context;
   beforeEach(() => {
     context = {
@@ -77,4 +77,23 @@ describe.only('Playlist', () => {
     const { props } = context;
     const wrapper = shallow(<PlayList {...props} />);
   });
+});
+
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  const lists = [];
+  const searchs = [];
+  const showPlaylist = true;
+
+  ReactDOM.render(<PlayList
+    lists={lists}
+    searchs={searchs}
+    showPlaylist={showPlaylist}
+    handleAdd={() = > {
+      console.log('added');
+    }}
+    handleRemove={() => {
+      console.log('removed list')
+    }}
+  />, div);
 });
