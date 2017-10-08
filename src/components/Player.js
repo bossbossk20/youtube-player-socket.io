@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Youtube from 'react-youtube'
 
-export default class Player extends Component {
+class Player extends Component {
   render () {
     const { video, endVdo } = this.props;
     const opts = {
@@ -22,3 +23,12 @@ export default class Player extends Component {
     )
   }
 }
+
+Player.propTypes = {
+  video: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
+  envVdo: PropTypes.func,
+};
+
+export default Player;
