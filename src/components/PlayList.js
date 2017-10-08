@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from 'antd/lib/button';
 
@@ -20,7 +21,7 @@ const DescWrapper = styled.div`
   margin-left: 8px;
 `;
 
-export default class PlayList extends Component {
+class PlayList extends Component {
   render() {
     const { lists, searchs, showPlaylist, handleAdd, handleRemove } = this.props;
     return (
@@ -54,3 +55,23 @@ export default class PlayList extends Component {
     )
   }
 }
+
+const searchPropTypes = PropTypes.shape({
+  snippet: PropTypes.object.isRequired,
+  id: PropTypes.shape({
+    videoId: PropTypes.string.isRequired,
+  }).isRequired,
+});
+
+PlayList.propTypes = {
+  lists: PropTypes.arrayOf(PropTypes.shape({
+    img: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  })).isRequired,
+  searchs: PropTypes.arrayOf(searchPropTypes),
+  showPlaylist: PropTypes.bool,
+  handleAdd: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
+};
+
+export default PlayList;

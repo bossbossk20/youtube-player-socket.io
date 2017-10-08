@@ -89,7 +89,7 @@ it('renders without crashing', () => {
     lists={lists}
     searchs={searchs}
     showPlaylist={showPlaylist}
-    handleAdd={() = > {
+    handleAdd={() => {
       console.log('added');
     }}
     handleRemove={() => {
