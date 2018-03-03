@@ -1,80 +1,98 @@
-import React, { Component } from 'react';
-import * as Grid from 'antd/lib/grid';
-import Input from 'antd/lib/input';
-import Form from 'antd/lib/form';
-import message from 'antd/lib/message';
-import Player from './components/Player';
-import PlayList from './components/PlayList';
-import Axios from 'axios';
-import GitHubForkRibbon from 'react-github-fork-ribbon';
-import { socket, URI } from './config';
-import { Helmet } from 'react-helmet';
+import * as Grid from 'antd/lib/grid'
 
-const { Search } = Input;
-const { Col, Row } = Grid;
+import React, { Component } from 'react'
+import { URI, socket } from './config'
+
+import Axios from 'axios'
+import Form from 'antd/lib/form'
+import GitHubForkRibbon from 'react-github-fork-ribbon'
+import { Helmet } from 'react-helmet'
+import Input from 'antd/lib/input'
+import PlayList from './components/PlayList'
+import Player from './components/Player'
+import message from 'antd/lib/message'
+
+const { Search } = Input
+const { Col, Row } = Grid
 class App extends Component {
   state = {
     list: '',
     lists: [],
     showPlaylist: true,
-    searchs: [],
-  };
+    searchs: []
+  }
   componentDidMount = () => {
     socket.on('newVdo', data => {
       this.setState({
-        lists: [...this.state.lists, data],
-      });
-    });
+        lists: [...this.state.lists, data]
+      })
+    })
     socket.on('newLists', data => {
       this.setState({
-        lists: data.lists,
-      });
-    });
-  };
+        lists: data.lists
+      })
+    })
+  }
   handleChange = e => {
     this.setState({
-      list: e.target.value,
-    });
-  };
+      list: e.target.value
+    })
+  }
   handleClick = value => {
     Axios.get(`${URI}/search?keyword=${value}`).then(res => {
       this.setState({
         showPlaylist: false,
-        searchs: res.data.items,
-      });
-    });
-  };
+        searchs: res.data.items
+      })
+    })
+  }
   handleRemove = index => {
-    let lists = this.state.lists;
-    lists.splice(index, 1);
-    this.setState({ lists });
-    socket.emit('newLists', { lists });
-  };
+    let lists = this.state.lists
+    lists.splice(index, 1)
+    this.setState({ lists })
+    socket.emit('newLists', { lists })
+  }
   handleAdd = (id, title, img) => {
-    let list = { id, title, img };
+    let list = { id, title, img }
     this.setState({
       showPlaylist: true,
-      lists: [...this.state.lists, list],
-    });
-    socket.emit('newVdo', list);
-    message.success('Added To Playlist');
-  };
+      lists: [...this.state.lists, list]
+    })
+    socket.emit('newVdo', list)
+    message.success('Added To Playlist')
+  }
   endVdo = () => {
-    let lists = this.state.lists;
-    lists.shift();
-    this.setState({ lists });
-    socket.emit('newLists', { lists });
-  };
+    let lists = this.state.lists
+    lists.shift()
+    this.setState({ lists })
+    socket.emit('newLists', { lists })
+  }
   render() {
-    const { lists, showPlaylist, searchs } = this.state;
+    const { lists, showPlaylist, searchs } = this.state
     return (
       <div style={{ marginTop: '30px', marginRight: '10px' }}>
         <Helmet>
           <title>Socket.io Youtube Player</title>
-          <link rel="apple-touch-icon" sizes="57x57" href="../public/icons/apple-icon-57x57.png" />
-          <link rel="apple-touch-icon" sizes="60x60" href="../public/icons/apple-icon-60x60.png" />
-          <link rel="apple-touch-icon" sizes="72x72" href="../public/icons/apple-icon-72x72.png" />
-          <link rel="apple-touch-icon" sizes="76x76" href="../public/icons/apple-icon-76x76.png" />
+          <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="../public/icons/apple-icon-57x57.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="../public/icons/apple-icon-60x60.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="../public/icons/apple-icon-72x72.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="../public/icons/apple-icon-76x76.png"
+          />
           <link
             rel="apple-touch-icon"
             sizes="114x114"
@@ -126,7 +144,10 @@ class App extends Component {
           />
           <link rel="manifest" href="../public/icons/manifest.json" />
           <meta name="msapplication-TileColor" content="#ffffff" />
-          <meta name="msapplication-TileImage" content="../public/icons/ms-icon-144x144.png" />
+          <meta
+            name="msapplication-TileImage"
+            content="../public/icons/ms-icon-144x144.png"
+          />
           <meta name="theme-color" content="#ffffff" />
         </Helmet>
         <Row>
@@ -153,8 +174,8 @@ class App extends Component {
           Fork me on GitHub
         </GitHubForkRibbon>
       </div>
-    );
+    )
   }
 }
 
-export default Form.create()(App);
+export default Form.create()(App)
