@@ -1,18 +1,18 @@
 cache:
   directories:
   - node_modules
-language: node_js 
+language: node_js
 node_js:
-  7 
+  7
 branches:
-  only: 
-  - master 
-script: 
-- npm install 
-- npm run build # build project
+  only:
+  - master
+script:
+- yarn install
+- yarn build # build project
 install:
-  npm install -g firebase-tools 
+  yarn global add firebase-tools
 after_success:
-- firebase use --token ${FIREBASE_TOKEN} 
-- firebase use --add ${PROJECT_ID} 
-- firebase deploy --non-interactive --token "${FIREBASE_TOKEN}" 
+- firebase use --token ${FIREBASE_TOKEN}
+- firebase use --add ${PROJECT_ID}
+- firebase deploy --non-interactive --token "${FIREBASE_TOKEN}"

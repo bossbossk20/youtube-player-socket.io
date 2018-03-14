@@ -1,0 +1,17 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["standard", "standard-react"],
+    "plugins": [
+        "standard",
+        "promise"
+    ],
+    "rules": {
+      "jsx-quotes": ["error", "prefer-double"],
+      "space-before-function-paren": "off",
+      "comma-dangle": "off",
+      "indent": 0,
+      "no-undef": "off",
+      "react/prop-types": "off",
+      "no-unused-vars": "off"
+    }
+}

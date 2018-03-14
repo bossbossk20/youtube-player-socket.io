@@ -1,10 +1,19 @@
+import * as Grid from 'antd/lib/grid'
+
 import React, { Component } from 'react'
-import Youtube from 'react-youtube'
-import { Row, Col, Input, Form, message, Button } from 'antd'
+import { URI, socket } from './config'
+
 import Axios from 'axios'
-import { socket, URI } from './config'
+import Form from 'antd/lib/form'
+import GitHubForkRibbon from 'react-github-fork-ribbon'
+import { Helmet } from 'react-helmet'
+import Input from 'antd/lib/input'
+import PlayList from './components/PlayList'
+import Player from './components/Player'
+import message from 'antd/lib/message'
 
 const { Search } = Input
+const { Col, Row } = Grid
 class App extends Component {
   state = {
     list: '',
@@ -13,104 +22,157 @@ class App extends Component {
     searchs: []
   }
   componentDidMount = () => {
-    socket.on('resumeList', (lists) => {
+    socket.on('newVdo', data => {
       this.setState({
-        lists
+        lists: [...this.state.lists, data]
       })
     })
-    socket.on('newVdo', (data) => {
-      this.setState({
-        lists: [ ...this.state.lists, data ]
-      })
-    })
-    socket.on('newLists', (data) => {
+    socket.on('newLists', data => {
       this.setState({
         lists: data.lists
       })
     })
   }
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       list: e.target.value
     })
   }
-  handleClick = (value) => {
-    Axios.get(`${URI}/search?keyword=${value}`).then((res) => {
+  handleClick = value => {
+    Axios.get(`${URI}/search?keyword=${value}`).then(res => {
       this.setState({
         showPlaylist: false,
         searchs: res.data.items
       })
     })
   }
-  handleRemove = (index) => {
+  handleRemove = index => {
     let lists = this.state.lists
     lists.splice(index, 1)
-    this.setState({ lists})
-    socket.emit('newLists', { lists})
+    this.setState({ lists })
+    socket.emit('newLists', { lists })
   }
   handleAdd = (id, title, img) => {
     let list = { id, title, img }
     this.setState({
       showPlaylist: true,
-      lists: [ ...this.state.lists, list ]
+      lists: [...this.state.lists, list]
     })
-    socket.emit('newVdo', list )
+    socket.emit('newVdo', list)
     message.success('Added To Playlist')
   }
   endVdo = () => {
     let lists = this.state.lists
     lists.shift()
-    this.setState({ lists})
-    socket.emit('newLists', { lists})
+    this.setState({ lists })
+    socket.emit('newLists', { lists })
   }
-  render () {
+  render() {
     const { lists, showPlaylist, searchs } = this.state
-    const opts = {
-      height: '390',
-      width: '640',
-      playerVars: {
-        autoplay: 1
-      }
-    }
     return (
-      <div style={{marginTop: '30px', marginRight: '10px'}}>
+      <div style={{ marginTop: '30px', marginRight: '10px' }}>
+        <Helmet>
+          <title>Socket.io Youtube Player</title>
+          <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="../public/icons/apple-icon-57x57.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="../public/icons/apple-icon-60x60.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="../public/icons/apple-icon-72x72.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="../public/icons/apple-icon-76x76.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="../public/icons/apple-icon-114x114.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="../public/icons/apple-icon-120x120.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="../public/icons/apple-icon-144x144.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="../public/icons/apple-icon-152x152.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="../public/icons/apple-icon-180x180.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="../public/icons/android-icon-192x192.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="../public/icons/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="../public/icons/favicon-96x96.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="../public/icons/favicon-16x16.png"
+          />
+          <link rel="manifest" href="../public/icons/manifest.json" />
+          <meta name="msapplication-TileColor" content="#ffffff" />
+          <meta
+            name="msapplication-TileImage"
+            content="../public/icons/ms-icon-144x144.png"
+          />
+          <meta name="theme-color" content="#ffffff" />
+        </Helmet>
         <Row>
-          <Col md={16} xs={24} style={{textAlign: 'center'}}>
-          {!lists[0] ?
-             <h1>Please Enter Link</h1> :
-             <Youtube videoId={lists[0].id} opts={opts} onEnd={this.endVdo} />}
+          <Col md={16} xs={24} style={{ textAlign: 'center' }}>
+            <Player video={lists[0]} endVdo={this.endVdo} />
           </Col>
-          <Col md={8} xs={24} >
-          <Search onSearch={value => this.handleClick(value)} />
-          <div>
-            {
-              showPlaylist ?
-              lists.map((list, index) => (
-                <div key={index} style={{display: 'flex', marginTop: '10px'}} >
-                  <div>
-                    <img src={list.img} alt="" style={{width:'250px'}} />
-                  </div>
-                  <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
-                    <div>{list.title}</div>
-                     <Button type="primary" onClick={ () => this.handleRemove(index) } >REMOVE</Button>
-                  </div>
-                </div>
-              )):
-                searchs.map((search, index) => (
-                  <div key={index} style={{display: 'flex', marginTop: '10px'}} >
-                    <div>
-                      <img src={search.snippet.thumbnails.medium.url} alt="" style={{width:'250px'}} />
-                    </div>
-                    <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-evenly', width: '100%', textAlign:'center', marginLeft: '8px'}}>
-                      <div>{search.snippet.title}</div>
-                       <Button type="primary" onClick={ () => this.handleAdd(search.id.videoId, search.snippet.title, search.snippet.thumbnails.medium.url) } >ADD</Button>
-                    </div>
-                  </div>
-                ))
-            }
-          </div>
+          <Col md={8} xs={24}>
+            <Search onSearch={value => this.handleClick(value)} autoFocus />
+            <PlayList
+              lists={lists}
+              searchs={searchs}
+              showPlaylist={showPlaylist}
+              handleAdd={this.handleAdd}
+              handleRemove={this.handleRemove}
+            />
           </Col>
         </Row>
+        <GitHubForkRibbon
+          href="https://github.com/bossbossk20/youtube-player-socket.io"
+          target="_blank"
+          position="left"
+          color="green"
+        >
+          Fork me on GitHub
+        </GitHubForkRibbon>
       </div>
     )
   }
