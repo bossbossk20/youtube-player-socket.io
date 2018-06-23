@@ -98,6 +98,7 @@ class App extends Component {
             sizes="114x114"
             href="../public/icons/apple-icon-114x114.png"
           />
+          //Use array.map() for js
           <link
             rel="apple-touch-icon"
             sizes="120x120"
@@ -142,6 +143,7 @@ class App extends Component {
             sizes="16x16"
             href="../public/icons/favicon-16x16.png"
           />
+          //Use Array.map() to avoid verbose code.
           <link rel="manifest" href="../public/icons/manifest.json" />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta
