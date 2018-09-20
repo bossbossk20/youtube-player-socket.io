@@ -18,7 +18,7 @@ class Player extends Component {
         {video ? (
           <Youtube videoId={video.id} opts={opts} onEnd={endVdo} />
         ) : (
-          <h1>Please enter a keyword to search for, or a Youtube link</h1>
+          <h1>Please enter a keyword to search </h1>
         )}
       </div>
     )
