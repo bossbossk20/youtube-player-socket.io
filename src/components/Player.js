@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Youtube from 'react-youtube'
 
 class Player extends Component {
-  render () {
+  render() {
     const { video, endVdo } = this.props
     const opts = {
       height: '390',
