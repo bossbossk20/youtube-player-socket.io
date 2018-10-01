@@ -39,13 +39,16 @@ class App extends Component {
       list: e.target.value
     })
   }
-  handleClick = value => {
-    Axios.get(`${URI}/search?keyword=${value}`).then(res => {
+  handleClick = async value => {
+    try {
+      const { data: { items } } = await Axios.get(`${URI}/search?keyword=${value}`)
       this.setState({
         showPlaylist: false,
-        searchs: res.data.items
+        searchs: items
       })
-    })
+    } catch(err) {
+      console.log(err)
+    }
   }
   handleRemove = index => {
     let lists = this.state.lists
