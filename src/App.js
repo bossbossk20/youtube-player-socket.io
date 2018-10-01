@@ -2,7 +2,6 @@ import * as Grid from 'antd/lib/grid'
 
 import React, { Component } from 'react'
 import { URI, socket } from './config'
-import Header from './components/Header'
 import PlayList from './components/PlayList'
 import Player from './components/Player'
 
@@ -72,7 +71,6 @@ class App extends Component {
     const { lists, showPlaylist, searchs } = this.state
     return (
       <div style={{ marginTop: '30px', marginRight: '10px' }}>
-        <Header />
         <Row>
           <Col md={16} xs={24} style={{ textAlign: 'center' }}>
             <Player video={lists[0]} endVdo={this.endVdo} />
