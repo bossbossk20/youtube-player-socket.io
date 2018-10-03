@@ -1,0 +1,12 @@
+version: '3.5'
+services:
+  youtube-player-socket.io:
+    container_name: youtube-player-socket.io
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
