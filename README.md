@@ -66,3 +66,7 @@ B. Contribute to an existing issue
 [![Gitter chat](https://badges.gitter.im/gitterHQ/services.png)](https://gitter.im/youtube-player-socket-io/Lobby?source=orgpage)
 
 ![](https://travis-ci.com/bossbossk20/youtube-player-socket.io.svg?token=MWPeeuitAEQryBz5xkuD&branch=master)
+
+[![GitHub Release](https://github-basic-badges.herokuapp.com/release/kennedyoliveira/github-basic-badges.svg)]()
+  
+
