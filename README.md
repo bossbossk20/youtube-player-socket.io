@@ -2,6 +2,7 @@
 
 # Socket.io Youtube Player
 
+[![GitHub Release](https://github-basic-badges.herokuapp.com/release/bossbossk20/youtube-player-socket.io.svg)]()
 [![GitHub Release](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 Plays a video from Youtube using [Socket.io](https://github.com/socketio/socket.io/).
