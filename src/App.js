@@ -57,14 +57,14 @@ class App extends Component {
   }
 
   handleRemove = index => {
-    let lists = this.state.lists
+    const lists = this.state.lists
     lists.splice(index, 1)
     this.setState({ lists })
     socket.emit('newLists', { lists })
   }
 
   handleAdd = (id, title, img) => {
-    let list = { id, title, img }
+    const list = { id, title, img }
     this.setState({
       showPlaylist: true,
       lists: [...this.state.lists, list]
@@ -74,7 +74,7 @@ class App extends Component {
   }
 
   endVdo = () => {
-    let lists = this.state.lists
+    const lists = this.state.lists
     lists.shift()
     this.setState({ lists })
     socket.emit('newLists', { lists })
@@ -94,8 +94,8 @@ class App extends Component {
               lists={lists}
               searchs={searchs}
               showPlaylist={showPlaylist}
-              handleAdd={this.handleAdd}
-              handleRemove={this.handleRemove}
+              onAdd={this.handleAdd}
+              onRemove={this.handleRemove}
             />
           </Col>
         </Row>

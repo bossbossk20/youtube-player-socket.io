@@ -1,4 +1,4 @@
-import PlayList from './PlayList'
+import PlayList from './index'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { shallow } from 'enzyme'
