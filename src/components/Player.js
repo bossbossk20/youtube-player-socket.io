@@ -15,7 +15,7 @@ const Player = ({ video, endVdo }) => (
     {video ? (
       <Youtube videoId={video.id} opts={playerOptions} onEnd={endVdo} />
     ) : (
-      <h1>Please enter a keyword to search </h1>
+      <h1>Please enter a keyword to search</h1>
     )}
   </div>
 )

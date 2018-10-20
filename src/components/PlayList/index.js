@@ -35,7 +35,7 @@ const PlayList = ({ lists, searchs, showPlaylist, onAdd, onRemove }) => (
 const searchPropTypes = PropTypes.shape({
   snippet: PropTypes.object.isRequired,
   id: PropTypes.shape({
-    videoId: PropTypes.string.isRequired
+    videoId: PropTypes.string
   }).isRequired
 })
 
