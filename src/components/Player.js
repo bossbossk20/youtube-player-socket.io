@@ -10,10 +10,10 @@ const playerOptions = {
   }
 }
 
-const Player = ({ video, endVdo }) => (
+const Player = ({ video, endVideo }) => (
   <div>
     {video ? (
-      <Youtube videoId={video.id} opts={playerOptions} onEnd={endVdo} />
+      <Youtube videoId={video.id} opts={playerOptions} onEnd={endVideo} />
     ) : (
       <h1>Please enter a keyword to search</h1>
     )}
@@ -24,7 +24,7 @@ Player.propTypes = {
   video: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
-  endVdo: PropTypes.func
+  endVideo: PropTypes.func
 }
 
 export default Player

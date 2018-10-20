@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    socket.on('newVdo', data => {
+    socket.on('newVideo', data => {
       this.setState({
         lists: [...this.state.lists, data]
       })
@@ -39,12 +39,6 @@ class App extends Component {
       this.setState({
         lists: data.lists
       })
-    })
-  }
-
-  handleChange = e => {
-    this.setState({
-      list: e.target.value
     })
   }
 
@@ -62,6 +56,16 @@ class App extends Component {
     }
   }
 
+  handleAdd = (id, title, img) => {
+    const list = { id, title, img }
+    this.setState({
+      showPlaylist: true,
+      lists: [...this.state.lists, list]
+    })
+    socket.emit('newVideo', list)
+    message.success('Added To Playlist')
+  }
+
   handleRemove = index => {
     const lists = this.state.lists
     lists.splice(index, 1)
@@ -69,17 +73,7 @@ class App extends Component {
     socket.emit('newLists', { lists })
   }
 
-  handleAdd = (id, title, img) => {
-    const list = { id, title, img }
-    this.setState({
-      showPlaylist: true,
-      lists: [...this.state.lists, list]
-    })
-    socket.emit('newVdo', list)
-    message.success('Added To Playlist')
-  }
-
-  endVdo = () => {
+  endVideo = () => {
     const lists = this.state.lists
     lists.shift()
     this.setState({ lists })
@@ -92,7 +86,7 @@ class App extends Component {
       <PageWrapper>
         <Row>
           <Col md={16} xs={24} style={{ textAlign: 'center' }}>
-            <Player video={lists[0]} endVdo={this.endVdo} />
+            <Player video={lists[0]} endVideo={this.endVideo} />
           </Col>
           <Col md={8} xs={24}>
             <Search onSearch={value => this.handleSearch(value)} autoFocus />

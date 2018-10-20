@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import PlayListItem from './PlayListItem'
 
+// Detect channels by the absence of their videoId
+const removeChannels = ({ id }) => !!id.videoId
+
 const PlayList = ({ lists, searchs, showPlaylist, onAdd, onRemove }) => (
   <div>
     {showPlaylist &&
@@ -14,21 +17,23 @@ const PlayList = ({ lists, searchs, showPlaylist, onAdd, onRemove }) => (
         />
       ))}
     {!showPlaylist &&
-      searchs.map((search, index) => (
-        <PlayListItem
-          image={search.snippet.thumbnails.medium.url}
-          alt={`${search.snippet.title} Image`}
-          title={search.snippet.title}
-          onAdd={() =>
-            onAdd(
-              search.id.videoId,
-              search.snippet.title,
-              search.snippet.thumbnails.medium.url
-            )
-          }
-          key={index}
-        />
-      ))}
+      searchs
+        .filter(removeChannels)
+        .map((search, index) => (
+          <PlayListItem
+            image={search.snippet.thumbnails.medium.url}
+            alt={`${search.snippet.title} Image`}
+            title={search.snippet.title}
+            onAdd={() =>
+              onAdd(
+                search.id.videoId,
+                search.snippet.title,
+                search.snippet.thumbnails.medium.url
+              )
+            }
+            key={index}
+          />
+        ))}
   </div>
 )
 
