@@ -22,54 +22,56 @@ const DescWrapper = styled.div`
   margin-left: 8px;
 `
 
-class PlayList extends Component {
-  render() {
-    const { lists, searchs, showPlaylist, handleAdd, handleRemove } = this.props
-    return (
-      <div>
-        {showPlaylist
-          ? lists.map((list, index) => (
-              <PlayItem key={index}>
-                <div>
-                  <ItemImage src={list.img} alt="" />
-                </div>
-                <DescWrapper>
-                  <div>{list.title}</div>
-                  <Button type="primary" onClick={() => handleRemove(index)}>
-                    REMOVE
-                  </Button>
-                </DescWrapper>
-              </PlayItem>
-            ))
-          : searchs.map((search, index) => (
-              <PlayItem key={index}>
-                <div>
-                  <ItemImage
-                    src={search.snippet.thumbnails.medium.url}
-                    alt={search.snippet.title + ' Image'}
-                  />
-                </div>
-                <DescWrapper>
-                  <div>{search.snippet.title}</div>
-                  <Button
-                    type="primary"
-                    onClick={() =>
-                      handleAdd(
-                        search.id.videoId,
-                        search.snippet.title,
-                        search.snippet.thumbnails.medium.url
-                      )
-                    }
-                  >
-                    ADD
-                  </Button>
-                </DescWrapper>
-              </PlayItem>
-            ))}
-      </div>
-    )
-  }
-}
+const PlayList = ({
+  lists,
+  searchs,
+  showPlaylist,
+  handleAdd,
+  handleRemove
+}) => (
+  <div>
+    {showPlaylist &&
+      lists.map((list, index) => (
+        <PlayItem key={index}>
+          <div>
+            <ItemImage src={list.img} alt="" />
+          </div>
+          <DescWrapper>
+            <div>{list.title}</div>
+            <Button type="primary" onClick={() => handleRemove(index)}>
+              REMOVE
+            </Button>
+          </DescWrapper>
+        </PlayItem>
+      ))}
+    {!showPlaylist &&
+      searchs.map((search, index) => (
+        <PlayItem key={index}>
+          <div>
+            <ItemImage
+              src={search.snippet.thumbnails.medium.url}
+              alt={`${search.snippet.title} Image`}
+            />
+          </div>
+          <DescWrapper>
+            <div>{search.snippet.title}</div>
+            <Button
+              type="primary"
+              onClick={() =>
+                handleAdd(
+                  search.id.videoId,
+                  search.snippet.title,
+                  search.snippet.thumbnails.medium.url
+                )
+              }
+            >
+              ADD
+            </Button>
+          </DescWrapper>
+        </PlayItem>
+      ))}
+  </div>
+)
 
 const searchPropTypes = PropTypes.shape({
   snippet: PropTypes.object.isRequired,
