@@ -1,29 +1,24 @@
-import React, { Component } from 'react'
-
+import React from 'react'
 import PropTypes from 'prop-types'
 import Youtube from 'react-youtube'
 
-class Player extends Component {
-  render() {
-    const { video, endVdo } = this.props
-    const opts = {
-      height: '390',
-      width: '640',
-      playerVars: {
-        autoplay: 1
-      }
-    }
-    return (
-      <div>
-        {video ? (
-          <Youtube videoId={video.id} opts={opts} onEnd={endVdo} />
-        ) : (
-          <h1>Please enter a keyword to search </h1>
-        )}
-      </div>
-    )
+const playerOptions = {
+  height: 390,
+  width: 640,
+  playerVars: {
+    autoplay: 1
   }
 }
+
+const Player = ({ video, endVdo }) => (
+  <div>
+    {video ? (
+      <Youtube videoId={video.id} opts={playerOptions} onEnd={endVdo} />
+    ) : (
+      <h1>Please enter a keyword to search </h1>
+    )}
+  </div>
+)
 
 Player.propTypes = {
   video: PropTypes.shape({
