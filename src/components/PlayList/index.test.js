@@ -1,4 +1,4 @@
-import PlayList from './PlayList'
+import PlayList from './index'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { shallow } from 'enzyme'
@@ -51,8 +51,8 @@ describe('Playlist', () => {
           }
         ],
         showPlaylist: false,
-        handleAdd: jest.fn(),
-        handleRemove: jest.fn()
+        onAdd: jest.fn(),
+        onRemove: jest.fn()
       }
     }
   })
@@ -66,12 +66,12 @@ describe('Playlist', () => {
     const { props } = context
     props.showPlaylist = true
     const wrapper = shallow(<PlayList {...props} />)
-    expect(wrapper.props().children.length).toBe(3)
+    expect(wrapper.children().length).toBe(3)
   })
   it('shoud render search items if showPlaylist is false', () => {
     const { props } = context
     const wrapper = shallow(<PlayList {...props} />)
-    expect(wrapper.props().children.length).toBe(2)
+    expect(wrapper.children().length).toBe(2)
   })
   it('shoud render search items if showPlaylist is false', () => {
     const { props } = context
@@ -90,10 +90,10 @@ it('renders without crashing', () => {
       lists={lists}
       searchs={searchs}
       showPlaylist={showPlaylist}
-      handleAdd={() => {
+      onAdd={() => {
         console.log('added')
       }}
-      handleRemove={() => {
+      onRemove={() => {
         console.log('removed list')
       }}
     />,

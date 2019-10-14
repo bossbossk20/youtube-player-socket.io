@@ -2,19 +2,25 @@ import * as Grid from 'antd/lib/grid'
 
 import React, { Component } from 'react'
 import { URI, socket } from './config'
-import Header from './components/Header'
 import PlayList from './components/PlayList'
 import Player from './components/Player'
 
 import Axios from 'axios'
 import Form from 'antd/lib/form'
-import GitHubForkRibbon from 'react-github-fork-ribbon'
+import GitHubForkRibbon from './components/GitHubForkRibbon'
 
 import Input from 'antd/lib/input'
 import message from 'antd/lib/message'
+import styled from 'styled-components'
 
 const { Search } = Input
 const { Col, Row } = Grid
+
+const PageWrapper = styled.main`
+  margin-top: 30px;
+  margin-right: 10px;
+`
+
 class App extends Component {
   state = {
     list: '',
@@ -22,8 +28,9 @@ class App extends Component {
     showPlaylist: true,
     searchs: []
   }
+
   componentDidMount = () => {
-    socket.on('newVdo', data => {
+    socket.on('newVideo', data => {
       this.setState({
         lists: [...this.state.lists, data]
       })
@@ -34,72 +41,66 @@ class App extends Component {
       })
     })
   }
-  handleChange = e => {
-    this.setState({
-      list: e.target.value
-    })
-  }
-  handleClick = async value => {
+
+  handleSearch = async value => {
     try {
-      const { data: { items } } = await Axios.get(`${URI}/search?keyword=${value}`)
+      const { data: { items } } = await Axios.get(
+        `${URI}/search?keyword=${value}`
+      )
       this.setState({
         showPlaylist: false,
         searchs: items
       })
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }
-  handleRemove = index => {
-    let lists = this.state.lists
-    lists.splice(index, 1)
-    this.setState({ lists })
-    socket.emit('newLists', { lists })
-  }
+
   handleAdd = (id, title, img) => {
-    let list = { id, title, img }
+    const list = { id, title, img }
     this.setState({
       showPlaylist: true,
       lists: [...this.state.lists, list]
     })
-    socket.emit('newVdo', list)
+    socket.emit('newVideo', list)
     message.success('Added To Playlist')
   }
-  endVdo = () => {
-    let lists = this.state.lists
+
+  handleRemove = index => {
+    const lists = this.state.lists
+    lists.splice(index, 1)
+    this.setState({ lists })
+    socket.emit('newLists', { lists })
+  }
+
+  endVideo = () => {
+    const lists = this.state.lists
     lists.shift()
     this.setState({ lists })
     socket.emit('newLists', { lists })
   }
+
   render() {
     const { lists, showPlaylist, searchs } = this.state
     return (
-      <div style={{ marginTop: '30px', marginRight: '10px' }}>
-        <Header />
+      <PageWrapper>
         <Row>
           <Col md={16} xs={24} style={{ textAlign: 'center' }}>
-            <Player video={lists[0]} endVdo={this.endVdo} />
+            <Player video={lists[0]} endVideo={this.endVideo} />
           </Col>
           <Col md={8} xs={24}>
-            <Search onSearch={value => this.handleClick(value)} autoFocus />
+            <Search onSearch={value => this.handleSearch(value)} autoFocus />
             <PlayList
               lists={lists}
               searchs={searchs}
               showPlaylist={showPlaylist}
-              handleAdd={this.handleAdd}
-              handleRemove={this.handleRemove}
+              onAdd={this.handleAdd}
+              onRemove={this.handleRemove}
             />
           </Col>
         </Row>
-        <GitHubForkRibbon
-          href="https://github.com/bossbossk20/youtube-player-socket.io"
-          target="_blank"
-          position="left"
-          color="green"
-        >
-          Fork me on GitHub
-        </GitHubForkRibbon>
-      </div>
+        <GitHubForkRibbon />
+      </PageWrapper>
     )
   }
 }

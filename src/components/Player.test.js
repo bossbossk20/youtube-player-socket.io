@@ -8,7 +8,7 @@ it('renders without crashing', () => {
     video: {
       id: 'OT5iufs218g'
     },
-    endVdo: () => console.log('video ended')
+    endVideo: () => console.log('video ended')
   }
   ReactDOM.render(<Player {...props} />, div)
 })
